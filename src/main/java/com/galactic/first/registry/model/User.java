@@ -24,24 +24,23 @@ public class User
     @ApiModelProperty(position = 0)
     private UUID id;
 
-    @NotBlank(message = "user name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     @ApiModelProperty(position = 1)
     private String name;
 
-
-    @NotBlank(message = "user name is mandatory")
+    @NotBlank(message = "Username is mandatory")
     @ApiModelProperty(position = 2)
     private String username;
 
-    @NotBlank(message = "user name is mandatory")
+    @NotBlank(message = "Password is mandatory")
     @ApiModelProperty(position = 3)
     private String password;
 
-    @NotBlank(message = "user name is mandatory")
+    @NotBlank(message = "Email is mandatory")
     @ApiModelProperty(position = 4)
     private String email;
 
-    @NotNull(message = "template disabled is mandatory")
+    @NotNull(message = "Disabled is mandatory")
     @ApiModelProperty(position = 5, example = "false", value = "Indicates if this master data has been disabled.")
     private Boolean disabled=false;
 
@@ -54,12 +53,9 @@ public class User
     private Date created;
 
 
+    public User() { }
 
-    public User()
-    {
-    }
-
-    public User(@NotBlank(message = "user name is mandatory") String name, @NotBlank(message = "user name is mandatory") String username, @NotBlank(message = "user name is mandatory") String password, @NotBlank(message = "user name is mandatory") String email) {
+    public User(@NotBlank(message = "user name is mandatory") String name, @NotBlank(message = "Username is mandatory") String username, @NotBlank(message = "user name is mandatory") String password, @NotBlank(message = "user name is mandatory") String email) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -73,6 +69,7 @@ public class User
     public void makeId(){
         this.id = UUID.randomUUID();
     }
+
     public String getName() {
         return name;
     }
@@ -144,31 +141,26 @@ public class User
         return Objects.equals(this.id, object.id);
     }
 
-
-
     @Override
     public int hashCode()
     {
         return Objects.hash(id);
     }
 
-
-
     @Override
-    public String toString()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class User {\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    disabled: ").append(toIndentedString(disabled)).append("\n");
-        sb.append("    modified: ").append(toIndentedString(modified)).append("\n");
-        sb.append("    created: ").append(toIndentedString(created)).append("\n");
-        sb.append("}");
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", disabled=").append(disabled);
+        sb.append(", modified=").append(modified);
+        sb.append(", created=").append(created);
+        sb.append('}');
         return sb.toString();
     }
-
-
 
     /**
      * Convert the given object to string with each line indented by 4 spaces
@@ -182,6 +174,4 @@ public class User
         }
         return o.toString().replace("\n", "\n    ");
     }
-
-
 }

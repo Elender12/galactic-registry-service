@@ -1,6 +1,5 @@
 package com.galactic.first.registry.security;
 
-
 import com.galactic.first.registry.model.User;
 import com.galactic.first.registry.repository.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;

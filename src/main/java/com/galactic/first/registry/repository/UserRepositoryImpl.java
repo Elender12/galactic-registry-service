@@ -66,7 +66,6 @@ public class UserRepositoryImpl implements UserRepository
     public User findByUsername(String username) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-        //List<User> users = mongoTemplate.find(query, User.class);
         return this.mongoOperations.findOne(query, User.class);
     }
 
