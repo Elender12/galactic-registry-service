@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 
-
 @Configuration
 public class MongoDBConfiguration extends AbstractMongoClientConfiguration
 {
@@ -61,7 +60,6 @@ public class MongoDBConfiguration extends AbstractMongoClientConfiguration
 
         return MongoClients.create(mongoClientSettings);
     }
-
 
 
     @Override

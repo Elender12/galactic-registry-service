@@ -12,16 +12,12 @@ public interface UserApiService
 
    List<User> findAll();
 
+   User save(User user);
 
-     User save(User user);
+   User edit(User user);
 
+   User findById(UUID id );
 
-    User edit(User user);
-
-
-    User findById(UUID id );
-
-
-    User delete(UUID id );
+   User delete(UUID id );
 
 }

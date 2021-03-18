@@ -7,16 +7,13 @@ import com.galactic.first.registry.security.JwtResponse;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 
-
 @Api(value = "Users", description = "the User API")
-public interface UserApi
-{
+public interface UserApi {
 
     @ApiOperation(value = "Authenticate", nickname = "authenticate", notes = " .", response = JwtResponse.class, tags = {"Users",})
     @ApiResponses(value = {
@@ -33,7 +30,6 @@ public interface UserApi
 
     ResponseEntity<JwtResponse> authenticate(@ApiParam(value = "User object", required = true) @Valid @RequestBody JwtRequest authenticationRequest
     ) throws Exception;
-
 
 
     @ApiOperation(value = "Add a new User.", nickname = "addUser", notes = "Takes a User object, saves it, and returns it with the saved id.", response = User.class, tags = {"Users",})

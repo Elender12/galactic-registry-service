@@ -58,8 +58,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     }
 
-    @ExceptionHandler(TemplateNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> handleNotFoundException(TemplateNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(UserNotFoundException ex, WebRequest request) {
         String pathWithoutURIWord = request.getDescription(false).substring(request.getDescription(false).indexOf("=")+1);
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
                 ex.getCode().value(),

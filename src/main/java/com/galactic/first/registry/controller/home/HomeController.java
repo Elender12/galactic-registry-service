@@ -1,6 +1,5 @@
 package com.galactic.first.registry.controller.home;
 
-import com.galactic.first.registry.monitoring.Monitoring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,17 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 import java.util.Collections;
 import java.util.Map;
 
 @Controller
-public class HomeController
-{
-
-    @Autowired
-    private Monitoring monitoring;
-
+public class HomeController {
 
     @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)

@@ -74,7 +74,6 @@ public class SwaggerDocumentationConfig
     }
 
 
-
     List<SecurityReference> defaultAuth()
     {
         return Arrays.asList(new SecurityReference("JWT", authorizationScopes()));
