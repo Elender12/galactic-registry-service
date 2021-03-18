@@ -1,0 +1,106 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'maven-publish'
+    id 'eclipse'
+    id "org.springframework.boot" version "2.3.4.RELEASE"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.galactic'
+version = '0.0.1'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
+
+}
+
+jar {
+    enabled = true
+    baseName = rootProject.name
+    version = version
+    manifest {
+        attributes 'Main-Class': 'com.galactic.registry.Application'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) { from components.java }
+    }
+
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+bootJar {
+    baseName = rootProject.name
+    version =  version
+}
+
+dependencies {
+    compile "org.aspectj:aspectjweaver:1.8.4"
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "2.1.8.RELEASE") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.3.7.RELEASE'
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.passay:passay:1.3.1")
+    compile group: 'io.github.classgraph', name: 'classgraph', version: '4.8.90'
+    compile(group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2')
+    compile(group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2')
+    compile("javax.validation:validation-api")
+    compile("com.github.joschi.jackson:jackson-datatype-threetenbp:2.6.4")
+    compile("org.junit.jupiter:junit-jupiter-api")
+    compile("io.jsonwebtoken:jjwt-api:0.10.5")
+    compile("io.jsonwebtoken:jjwt-impl:0.10.5")
+    compile("io.jsonwebtoken:jjwt-jackson:0.10.5")
+    compile("org.mockito:mockito-core")
+    compile("org.springframework.boot:spring-boot-starter-web-services")
+    implementation('com.github.79salao:Portal_LIBRARY:master-SNAPSHOT')
+    compile group: 'org.json', name: 'json'
+    compile("com.h2database:h2")
+    compile("junit:junit")
+    compile("com.vaadin.external.google:android-json:0.0.20131108.vaadin1")
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine' // <- No version
+    }
+
+    testCompile("org.mockito:mockito-core:3.3.3")
+    testCompile("org.springframework.boot:spring-boot-test:2.3.4.RELEASE")
+    testCompile("org.springframework:spring-test:5.2.6.RELEASE")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task printVersion {
+    // any code that goes here is part of configuring the task
+    // this code will always get run, even if the task is not executed
+    doLast { // add a task action
+        // any code that goes here is part of executing the task
+        // this code will only get run if and when the task gets executed
+        println project.version
+    }
+}
