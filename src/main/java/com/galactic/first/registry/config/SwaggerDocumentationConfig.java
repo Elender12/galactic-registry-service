@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-08-25T11:13:13.435Z[GMT]")
 @Configuration
 public class SwaggerDocumentationConfig
@@ -22,12 +21,12 @@ public class SwaggerDocumentationConfig
     {
         return new ApiInfoBuilder()
             .title("User API")
-            .description("User microservice. Detailed description of the Api.")
+            .description("Microservice to perform CRUD operations with an User")
             .license("Apache 2.0")
             .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
             .termsOfServiceUrl("")
             .version("1.0.0")
-            .contact(new Contact("", "", ""))
+            .contact(new Contact("Elena Cirstea", "", ""))
             .build();
     }
 

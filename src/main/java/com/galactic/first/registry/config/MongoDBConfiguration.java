@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import java.util.Collection;
 import java.util.Collections;
 
-
 @Configuration
 public class MongoDBConfiguration extends AbstractMongoClientConfiguration
 {
@@ -31,15 +30,11 @@ public class MongoDBConfiguration extends AbstractMongoClientConfiguration
     @Value("${spring.data.mongodb.database}")
     private String mongoDBDatabase;
 
-
-
     @Override
     protected String getDatabaseName()
     {
         return mongoDBDatabase;
     }
-
-
 
     @Override
     public MongoClient mongoClient()
@@ -60,7 +55,6 @@ public class MongoDBConfiguration extends AbstractMongoClientConfiguration
 
         return MongoClients.create(mongoClientSettings);
     }
-
 
     @Override
     public Collection getMappingBasePackages()
