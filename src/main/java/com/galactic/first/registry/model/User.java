@@ -1,33 +1,27 @@
 package com.galactic.first.registry.model;
 
-
-
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-
-
 @Document(collection = "User")
-public class User
-{
+public class User {
     @Id
     @Indexed(unique = true)
-    @ApiModelProperty(position = 0)
     private UUID id;
 
     @NotBlank(message = "Name is mandatory")
     @ApiModelProperty(position = 1)
     private String name;
 
+    @Indexed(unique = true)
     @NotBlank(message = "Username is mandatory")
     @ApiModelProperty(position = 2)
     private String username;
@@ -36,6 +30,7 @@ public class User
     @ApiModelProperty(position = 3)
     private String password;
 
+    @Indexed(unique = true)
     @NotBlank(message = "Email is mandatory")
     @ApiModelProperty(position = 4)
     private String email;
@@ -55,7 +50,7 @@ public class User
 
     public User() { }
 
-    public User(@NotBlank(message = "user name is mandatory") String name, @NotBlank(message = "Username is mandatory") String username, @NotBlank(message = "user name is mandatory") String password, @NotBlank(message = "user name is mandatory") String email) {
+    public User(@NotBlank(message = "Name is mandatory") String name, @NotBlank(message = "Username is mandatory") String username, @NotBlank(message = "Password is mandatory") String password, @NotBlank(message = "Email is mandatory") String email) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -129,18 +124,15 @@ public class User
     @Override
     public boolean equals( Object o )
     {
-        if( this == o )
-        {
+        if( this == o ) {
             return true;
         }
-        if( o == null || getClass() != o.getClass() )
-        {
+        if( o == null || getClass() != o.getClass() ) {
             return false;
         }
         User object = (User)o;
         return Objects.equals(this.id, object.id);
     }
-
     @Override
     public int hashCode()
     {
@@ -160,18 +152,5 @@ public class User
         sb.append(", created=").append(created);
         sb.append('}');
         return sb.toString();
-    }
-
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
-    private String toIndentedString( Object o )
-    {
-        if( o == null )
-        {
-            return "null";
-        }
-        return o.toString().replace("\n", "\n    ");
     }
 }

@@ -1,5 +1,6 @@
 package com.galactic.first.registry.exception;
 
+
 import com.google.common.base.Splitter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @ControllerAdvice
 @RestController
@@ -28,21 +29,21 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                                                                   HttpStatus status, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        String error = "";
+        String error;
         body.put("timestamp", new Date());
         body.put("status", status.value());
         body.put("error",status.getReasonPhrase());
 
         //If: It means that the error is not from @Valid, but from custom validation. Else: error from @Valid
         if(ex.getBindingResult().getFieldErrors().isEmpty()){
-            error= ex.getBindingResult().getGlobalError().getDefaultMessage();
+            error= Objects.requireNonNull(ex.getBindingResult().getGlobalError()).getDefaultMessage();
             body.put("field","name");
             body.put("problem", "duplicated");
         }else{
-            error = ex.getBindingResult().getFieldError().getDefaultMessage();
+            error = Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage();
             body.put("field", ex.getBindingResult().getFieldError().getField());
 
-            if(ex.getBindingResult().getFieldError().getCode().equals("NotBlank")){
+            if(Objects.equals(ex.getBindingResult().getFieldError().getCode(), "NotBlank")){
                 body.put("problem", "empty");
             }
             if(ex.getBindingResult().getFieldError().getCode().equals("NotNull")){
@@ -58,8 +59,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public final ResponseEntity<ExceptionResponse> handleNotFoundException(UserNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(UserException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(UserException ex, WebRequest request) {
         String pathWithoutURIWord = request.getDescription(false).substring(request.getDescription(false).indexOf("=")+1);
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
                 ex.getCode().value(),
@@ -69,15 +70,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                 ex.getMessage(),
                 pathWithoutURIWord);
 
-        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     private Map<String,String> bodyStrToMap(String clientMessageStr) {
         String bodyWithoutTimestamp = clientMessageStr.substring(clientMessageStr.indexOf(",")+1)
                 .replace("\"", "");
         String result = bodyWithoutTimestamp.substring(0, bodyWithoutTimestamp.length() - 1);
-        Map<String, String> map = Splitter.on( "," ).withKeyValueSeparator( ':' ).split( result );
-        return map;
+        return Splitter.on( "," ).withKeyValueSeparator( ':' ).split( result );
     }
 
 

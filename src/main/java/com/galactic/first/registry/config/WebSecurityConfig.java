@@ -35,16 +35,16 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcCo
     @Autowired
     private JwtAuthTokenFilter jwtRequestFilter;
 
-    WebSecurityConfig() { }
+    WebSecurityConfig() {
+    }
 
     @Override
-    public void addCorsMappings( CorsRegistry registry )
-    {
+    public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**").allowedMethods("*");
     }
 
     @Autowired
-    public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // configure AuthenticationManager so that it knows from where to load
         // user for matching credentials
         // Use BCryptPasswordEncoder
@@ -61,38 +61,40 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcCo
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
     @Override
-    protected void configure( HttpSecurity httpSecurity ) throws Exception {
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
         // We don't need CSRF for this example
         httpSecurity.cors().and().csrf().disable()
-            // don't authenticate this particular request
-            .authorizeRequests()
-            .antMatchers(
-                "/healthcheck",
-                "/config",
-                "/swagger-ui.html",
-                "/swagger-ui/**",
-                "/swagger-resources/**",
-                "/v2/api-docs/**",
-                "/webjars/**"
-            )
-               .permitAll().antMatchers( HttpMethod.POST, "/users").permitAll()
-                .antMatchers( HttpMethod.POST, "/authenticate").permitAll()
-            // all other requests need to be authenticated
-            .anyRequest().authenticated().and()
-            // make sure we use stateless session; session won't be used to store user's state.
-            .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                // don't authenticate this particular request
+                .authorizeRequests()
+                .antMatchers("/",
+                        "/healthcheck",
+                        "/config",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**",
+                        "/v2/api-docs/**",
+                        "/webjars/**"
+                )
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                // all other requests need to be authenticated
+                .anyRequest().authenticated().and()
+                // make sure we use stateless session; session won't be used to store user's state.
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
-    public void addResourceHandlers( ResourceHandlerRegistry registry ) {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
-            .addResourceLocations("classpath:/META-INF/resources/");
+                .addResourceLocations("classpath:/META-INF/resources/");
 
         registry.addResourceHandler("/webjars/**")
-            .addResourceLocations("classpath:/META-INF/resources/webjars/");
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

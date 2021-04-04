@@ -21,12 +21,12 @@ public class SwaggerDocumentationConfig
     {
         return new ApiInfoBuilder()
             .title("User API")
-            .description("Microservice to perform CRUD operations with an User")
+            .description("Microservice to perform CRUD operations with an user")
             .license("Apache 2.0")
             .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
             .termsOfServiceUrl("")
             .version("1.0.0")
-            .contact(new Contact("Elena Cirstea", "", ""))
+            .contact(new Contact("Elena Cirstea", "", "elender1230@gmail.com"))
             .build();
     }
 

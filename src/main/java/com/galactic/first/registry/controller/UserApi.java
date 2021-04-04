@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Api(value = "Users", description = "the User API")
+@Api(value = "Users")
 public interface UserApi {
 
-    @ApiOperation(value = "Authenticate", nickname = "authenticate", notes = " .", response = JwtResponse.class, tags = {"Users",})
+    @ApiOperation(value = "Authenticate a user by username and password", nickname = "authenticate", notes = " .", response = JwtResponse.class, tags = {"Users",})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK.", response = User.class),
             @ApiResponse(code = 400, message = "Invalid User.", response = Error.class),
@@ -32,7 +32,7 @@ public interface UserApi {
     ) throws Exception;
 
 
-    @ApiOperation(value = "Add a new User.", nickname = "addUser", notes = "Takes a User object, saves it, and returns it with the saved id.", response = User.class, tags = {"Users",})
+    @ApiOperation(value = "Add a new user.", nickname = "addUser", notes = "Takes a User object, saves it, and returns it with the saved id.", response = User.class, tags = {"Users",})
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK.", response = User.class),
         @ApiResponse(code = 400, message = "Invalid User.", response = Error.class),
@@ -62,7 +62,7 @@ public interface UserApi {
     );
 
 
-    @ApiOperation(value = "Get all Users.", nickname = "getAllUsers", notes = "Returns all Users.", response = User.class, responseContainer = "List", tags = {"Users",})
+    @ApiOperation(value = "Get all users.", nickname = "getAllUsers", notes = "Returns all Users.", response = User.class, responseContainer = "List", tags = {"Users",})
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK.", response = User.class, responseContainer = "List"),
         @ApiResponse(code = 401, message = "Unauthorized.", response = Error.class),
@@ -75,7 +75,7 @@ public interface UserApi {
     ResponseEntity<List<User>> getAllUsers();
 
 
-    @ApiOperation(value = "Get a User by id.", nickname = "getUsersByID", notes = "Returns one User by id.", response = User.class, tags = {"Users",})
+    @ApiOperation(value = "Get a user by id.", nickname = "getUsersByID", notes = "Returns one User by id.", response = User.class, tags = {"Users",})
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK.", response = User.class),
         @ApiResponse(code = 401, message = "Unauthorized.", response = Error.class),
@@ -89,7 +89,7 @@ public interface UserApi {
     );
 
 
-    @ApiOperation(value = "Update an existing User.", nickname = "updateUsers", notes = "Takes an existing User, updates it, and returns the new object.", response = User.class, tags = {"Users",})
+    @ApiOperation(value = "Update an existing user.", nickname = "updateUsers", notes = "Takes an existing User, updates it, and returns the new object.", response = User.class, tags = {"Users",})
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK.", response = User.class),
         @ApiResponse(code = 400, message = "Invalid User.", response = Error.class),

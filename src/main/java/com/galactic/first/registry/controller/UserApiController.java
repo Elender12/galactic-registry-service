@@ -16,6 +16,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.Valid;
@@ -45,7 +46,7 @@ public class UserApiController implements UserApi
         final String token = jwtProvider.generateJwtToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
-    //@CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:9100")
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -62,6 +63,7 @@ public class UserApiController implements UserApi
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtProvider.generateJwtToken(userDetails);
+        System.out.println("authenticate for user: "+authenticationRequest.getUsername());
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
@@ -70,7 +72,6 @@ public class UserApiController implements UserApi
         System.out.println("Received addUser request");
         return ResponseEntity.ok().body(userService.save(body));
     }
-
 
 
     public ResponseEntity<User> deleteUser(@ApiParam(value = "User object to update.", required = true)
@@ -84,20 +85,16 @@ public class UserApiController implements UserApi
         return ResponseEntity.ok().body(userService.findAll());
     }
 
-
-    public ResponseEntity<User> getUserByID(@ApiParam(value = "", required = true)
+    public ResponseEntity<User> getUserByID(@ApiParam(value = "Returns a user by Id", required = true)
                                             @PathVariable("id") UUID id ) {
         System.out.println( "Received getUserByID request");
         return ResponseEntity.ok().body(userService.findById(id));
     }
-
 
     public ResponseEntity<User> updateUser(@ApiParam(value = "User object to update.", required = true)
                                            @Valid @RequestBody User body ) {
         System.out.println( "Received updateUser request");
         return ResponseEntity.ok().body(userService.edit(body));
     }
-
-
 
 }

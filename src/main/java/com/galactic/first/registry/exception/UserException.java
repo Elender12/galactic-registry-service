@@ -2,10 +2,10 @@ package com.galactic.first.registry.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class UserNotFoundException extends RuntimeException {
+public class UserException extends RuntimeException {
     private HttpStatus code;
     private String errorField;
-    public UserNotFoundException(HttpStatus badRequest, String message, String errorField) {
+    public UserException(HttpStatus badRequest, String message, String errorField) {
         super(message);
         this.code = badRequest;
         this.errorField=errorField;
